@@ -2,22 +2,28 @@
 
 ## What This Is
 
-CLI tool that takes a YouTube presentation video and produces a Markdown file with unique slide screenshots paired with transcript text. Run via `python cli.py`.
+CLI tool that takes a YouTube presentation video and produces a Markdown file with unique slide screenshots paired with transcript text.
+
+Install: `pip install yt-slide-mark`. Run: `yt-slide-mark <url>` or `python -m yt_slide_mark <url>`.
 
 ## Project Structure
 
-Flat layout — all .py files in repo root, no package subfolder. Direct imports (e.g. `from models import ...`).
+Python package `yt_slide_mark/` with relative imports. Published on PyPI, built with hatchling.
 
 ```
-cli.py             — argparse CLI entry point, process_video(), batch mode via -b FILE
-models.py          — dataclasses: VideoInfo, TranscriptSegment, SlideFrame, SlideWithText
-utils.py           — extract_video_id, sanitize_filename (70 char limit), get_video_info (noembed), format_timestamp
-transcript.py      — fetch_transcript: 4-level fallback (manual → auto → translated → any)
-video.py           — download_video (yt-dlp, video-only mp4) + extract_unique_frames (OpenCV + SSIM)
-region.py          — ROI parsing (x1,y1-x2,y2 pixels/percents) + mask builder for SSIM
-mapper.py          — map_transcript_to_slides: assigns transcript segments to slides by timestamp
-punctuation.py     — punctuators pcs_en wrapper, lazy-loaded ONNX model
-markdown_gen.py    — generate_markdown + save_output
+pyproject.toml              — build config, dependencies, CLI entry point
+yt_slide_mark/
+  __init__.py               — version
+  __main__.py               — python -m yt_slide_mark support
+  cli.py                    — argparse CLI entry point, process_video(), batch mode via -b FILE
+  models.py                 — dataclasses: VideoInfo, TranscriptSegment, SlideFrame, SlideWithText
+  utils.py                  — extract_video_id, sanitize_filename (70 char limit), get_video_info (noembed), format_timestamp
+  transcript.py             — fetch_transcript: 4-level fallback (manual → auto → translated → any)
+  video.py                  — download_video (yt-dlp, video-only mp4) + extract_unique_frames (OpenCV + SSIM)
+  region.py                 — ROI parsing (x1,y1-x2,y2 pixels/percents) + mask builder for SSIM
+  mapper.py                 — map_transcript_to_slides: assigns transcript segments to slides by timestamp
+  punctuation.py            — punctuators pcs_en wrapper, lazy-loaded ONNX model
+  markdown_gen.py           — generate_markdown + save_output
 ```
 
 ## Key Technical Decisions
@@ -34,8 +40,8 @@ markdown_gen.py    — generate_markdown + save_output
 ## CLI
 
 ```
-python cli.py <url>           # single video
-python cli.py -b urls.txt     # batch from file (one URL per line, # comments ok)
+yt-slide-mark <url>           # single video
+yt-slide-mark -b urls.txt     # batch from file (one URL per line, # comments ok)
 
 Options:
   -l, --language          default: en

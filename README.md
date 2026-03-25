@@ -25,6 +25,9 @@ yt-slide-mark "https://youtube.com/watch?v=VIDEO_ID"
 # Batch — from a file with URLs
 yt-slide-mark -b urls.txt
 
+# Without installing (via uvx)
+uvx yt-slide-mark "https://youtube.com/watch?v=VIDEO_ID"
+
 # Or via python -m
 python -m yt_slide_mark "https://youtube.com/watch?v=VIDEO_ID"
 ```
