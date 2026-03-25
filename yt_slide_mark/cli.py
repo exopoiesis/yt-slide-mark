@@ -18,7 +18,7 @@ from . import __version__
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="slide_scribe",
+        prog="yt-slide-mark",
         description="Extract slides from a YouTube presentation and pair them with transcript text.",
     )
     p.add_argument("url", nargs="?", help="YouTube video URL or ID")
