@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yt-slide-mark"
+version = "0.1.0"
+description = "Extract slides from YouTube presentations with transcript text"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Igor Morozov", email = "igor@exopoiesis.space" }]
+dependencies = [
+    "youtube-transcript-api>=1.0.0",
+    "yt-dlp",
+    "opencv-python-headless",
+    "scikit-image",
+    "numpy",
+    "punctuators",
+    "requests",
+]
+
+[project.urls]
+Repository = "https://github.com/exopoiesis/yt-slide-mark"
+
+[project.scripts]
+yt-slide-mark = "yt_slide_mark.cli:main"
