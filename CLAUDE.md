@@ -73,7 +73,13 @@ output/<slug>/
 
 ## Dependencies
 
-youtube-transcript-api>=1.0.0, yt-dlp, opencv-python-headless, scikit-image, numpy, punctuators, requests
+youtube-transcript-api>=1.0.0, yt-dlp, opencv-python-headless, numpy, requests, onnxruntime, sentencepiece
+
+~200 MB install. SSIM implemented in video.py (cv2+numpy, no scikit-image/scipy).
+Punctuation uses lightweight ONNX wrapper (no torch/punctuators/huggingface-hub).
+SPE tokenizer (0.6 MB) bundled in package. ONNX model (200 MB) auto-downloaded on first use
+and cached in %LOCALAPPDATA%/yt-slide-mark (Win) or ~/.cache/yt-slide-mark (Linux/macOS).
+Tests: `pytest tests/` (45 tests covering ssim, punctuation, utils, region, mapper, markdown).
 
 ## Common Issues
 

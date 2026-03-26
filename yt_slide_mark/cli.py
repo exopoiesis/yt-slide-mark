@@ -112,7 +112,7 @@ def process_video(
         if not no_punctuate:
             log.info("Restoring punctuation…")
             raw_texts = [sw.text for sw in slides_with_text]
-            punctuated = punctuate_texts(raw_texts)
+            punctuated = punctuate_texts(raw_texts, language=language)
             for sw, new_text in zip(slides_with_text, punctuated):
                 if sw.segments:
                     from .models import TranscriptSegment

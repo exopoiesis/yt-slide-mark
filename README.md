@@ -141,12 +141,16 @@ YouTube URL
 
 ## Dependencies
 
+~200 MB total (vs ~900 MB in v1.0.0 — torch, scipy, scikit-image eliminated):
 - **youtube-transcript-api** — transcript fetching with fallbacks
 - **yt-dlp** — video downloading
-- **opencv-python-headless** — frame extraction
-- **scikit-image** — SSIM structural similarity
-- **punctuators** — punctuation/capitalization restoration (ONNX, CPU)
-- **requests** — video metadata via noembed.com
+- **opencv-python-headless** — frame extraction + SSIM
+- **onnxruntime** — punctuation model inference
+- **sentencepiece** — tokenization for punctuation
+- **numpy** — numerical operations
+- **requests** — video metadata + one-time model download
+
+The 200 MB ONNX punctuation model is downloaded automatically on first run and cached in `%LOCALAPPDATA%/yt-slide-mark` (Windows) or `~/.cache/yt-slide-mark` (Linux/macOS).
 
 ## License
 

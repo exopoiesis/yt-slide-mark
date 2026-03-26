@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "yt-slide-mark"
-version = "1.0.0"
+version = "1.1.0"
 description = "Extract slides from YouTube presentations with transcript text"
 readme = "README.md"
 license = "MIT"
@@ -14,11 +14,17 @@ dependencies = [
     "youtube-transcript-api>=1.0.0",
     "yt-dlp",
     "opencv-python-headless",
-    "scikit-image",
     "numpy",
-    "punctuators",
     "requests",
+    "onnxruntime",
+    "sentencepiece",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [project.urls]
 Repository = "https://github.com/exopoiesis/yt-slide-mark"

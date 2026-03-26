@@ -6,10 +6,37 @@ import tempfile
 
 import cv2
 import numpy as np
-from skimage.metrics import structural_similarity as ssim
 
 from .models import SlideFrame
 from .region import Region, build_roi_mask, apply_roi_mask
+
+
+def ssim(img1: np.ndarray, img2: np.ndarray) -> float:
+    """Compute mean SSIM between two grayscale uint8 images using OpenCV+numpy.
+
+    Equivalent to skimage.metrics.structural_similarity with default params.
+    """
+    C1 = (0.01 * 255) ** 2
+    C2 = (0.03 * 255) ** 2
+
+    a = img1.astype(np.float64)
+    b = img2.astype(np.float64)
+
+    mu1 = cv2.GaussianBlur(a, (11, 11), 1.5)
+    mu2 = cv2.GaussianBlur(b, (11, 11), 1.5)
+
+    mu1_sq = mu1 * mu1
+    mu2_sq = mu2 * mu2
+    mu1_mu2 = mu1 * mu2
+
+    sigma1_sq = cv2.GaussianBlur(a * a, (11, 11), 1.5) - mu1_sq
+    sigma2_sq = cv2.GaussianBlur(b * b, (11, 11), 1.5) - mu2_sq
+    sigma12 = cv2.GaussianBlur(a * b, (11, 11), 1.5) - mu1_mu2
+
+    num = (2 * mu1_mu2 + C1) * (2 * sigma12 + C2)
+    den = (mu1_sq + mu2_sq + C1) * (sigma1_sq + sigma2_sq + C2)
+
+    return float(np.mean(num / den))
 from .utils import format_timestamp
 
 log = logging.getLogger(__name__)
